@@ -57,7 +57,24 @@ class HorseRaces:
             inner keys are (str) races, inner values are (int) race times
             EXAMPLE: {'Special Week': {'Tenno Sho Fall': 16.5, 'Tenno Sho Spring': 16.3, 'Teio Sho': 17.0}}
         '''
-        pass
+    
+        results = {}
+
+        header = data[0]  # first row (column names)
+
+        for row in data[1:]:  # skip header
+            horse = row[0]
+            race1_time = float(row[1])
+            race2_time = float(row[2])
+
+            results[horse] = {
+                header[1]: race1_time,
+                header[2]: race2_time
+            }
+
+        return results
+
+
 
 ###############################################################################
 ##### TASK 2
