@@ -58,21 +58,23 @@ class HorseRaces:
             EXAMPLE: {'Special Week': {'Tenno Sho Fall': 16.5, 'Tenno Sho Spring': 16.3, 'Teio Sho': 17.0}}
         '''
     
-        results = {}
 
-        header = data[0]  # first row (column names)
 
-        for row in data[1:]:  # skip header
-            horse = row[0]
-            race1_time = float(row[1])
-            race2_time = float(row[2])
+        header = table[0]
+        race_dict = {}
 
-            results[horse] = {
-                header[1]: race1_time,
-                header[2]: race2_time
-            }
+        for row in table[1:]:
 
-        return results
+            horse_name = row[0]
+            horse_races = {}
+
+            for i in range(len(row[1:])):
+                horse_races[header[i+1]] = float(row[i+1])
+
+            race_dict[horse_name] = horse_races
+
+        return race_dict
+
 
 
 
@@ -92,7 +94,27 @@ class HorseRaces:
             tuple of fastest race name and the time
             EXAMPLE: ('Teio Sho', 14.8)
         '''
-        pass
+    
+
+    # If horse does not exist
+        if horse not in self.race_dict:
+            return (None, 999.9)
+
+        races = self.race_dict[horse]
+
+        fastest_race = None
+        fastest_time = 999.9
+
+    # Loop through races manually
+        for race_name in races:
+            time = races[race_name]
+
+            if time < fastest_time:
+                fastest_time = time
+                fastest_race = race_name
+
+        return (fastest_race, fastest_time)
+
 
 ###############################################################################
 ##### TASK 3
